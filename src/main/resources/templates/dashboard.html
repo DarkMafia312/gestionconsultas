@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Control</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="medical-container">
+  <header class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="title-primary">🏥 Panel de Control Médico</h2>
+      <p class="subtitle">Gestión de flujo de pacientes y disponibilidad</p>
+    </div>
+
+    <a th:href="@{/consultas/nueva}" class="btn-medical text-decoration-none">
+      + Agendar Nueva Cita
+    </a>
+  </header>
+
+  <section class="dashboard-grid">
+    <div class="card-stats">
+      <div class="stat-icon icon-blue">📋</div>
+      <div class="stat-info">
+        <div class="stat-value" th:text="${total}">0</div>
+        <div class="stat-label">Citas Totales</div>
+      </div>
+    </div>
+
+    <div class="card-stats">
+      <div class="stat-icon icon-teal">📅</div>
+      <div class="stat-info">
+        <div class="stat-value" th:text="${hoy}">0</div>
+        <div class="stat-label">Consultas de Hoy</div>
+      </div>
+    </div>
+
+    <div class="card-stats">
+      <div class="stat-icon icon-amber">⭐</div>
+      <div class="stat-info">
+        <div class="stat-value">12h</div>
+        <div class="stat-label">Turno Activo</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="table-container">
+    <h4 class="table-title">Agenda Reciente de Pacientes</h4>
+
+    <div th:if="${success}" class="alert-medical" th:text="${success}"></div>
+
+    <div th:if="${not #lists.isEmpty(consultas)}">
+      <table class="table-medical">
+        <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Especialista</th>
+          <th>Horario programado</th>
+          <th>Estado</th>
+          <th class="text-center">Gestión</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${consultas}">
+          <td>
+            <div class="patient-name" th:text="${c.paciente}"></div>
+            <span class="patient-id" th:text="${'ID: #' + c.id}"></span>
+          </td>
+          <td>
+            <span class="badge-doctor">
+              👨‍⚕️ <span th:text="${c.medico}"></span>
+            </span>
+            <div class="specialty-text" th:text="${c.especialidad}"></div>
+          </td>
+          <td>
+            <div class="date-text" th:text="${#temporals.format(c.fechaHora, 'dd MMM, yyyy')}"></div>
+            <strong class="time-text" th:text="${#temporals.format(c.fechaHora, 'HH:mm')}"></strong>
+          </td>
+          <td>
+            <span th:if="${c.estado == 'Pendiente'}" class="badge-status badge-pendiente">⏳ Pendiente</span>
+            <span th:if="${c.estado == 'Realizada'}" class="badge-status badge-realizada">✅ Realizada</span>
+            <span th:if="${c.estado == 'Cancelada'}" class="badge-status badge-cancelada">❌ Cancelada</span>
+          </td>
+          <td class="text-center">
+            <div class="action-group">
+              <th:block th:if="${c.estado == 'Pendiente'}">
+                <a th:href="@{/consultas/completar/{id}(id=${c.id})}" class="btn-action btn-done">Done</a>
+                <a th:href="@{/consultas/cancelar/{id}(id=${c.id})}" class="btn-action btn-cancel">Cancel</a>
+              </th:block>
+              <a th:href="@{/consultas/eliminar/{id}(id=${c.id})}" class="btn-action btn-del" onclick="return confirm('¿Eliminar registro?')">Del</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(consultas)}" class="text-center py-5">
+      <div style="font-size: 5rem; filter: grayscale(1); opacity: 0.2; margin-bottom: 1rem;">📂</div>
+      <h3 class="fw-light text-secondary">No hay consultas registradas hasta el momento</h3>
+      <p class="text-muted">Parece que tu agenda está libre. Use el botón superior para programar una cita.</p>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
