@@ -42,7 +42,7 @@ Implementamos una lógica de horarios basada en roles médicos:
 ---
 
 ## 🛠️ Stack Tecnológico
-* **Lenguaje:** Java 17 (LTS).
+* **Lenguaje:** Java 21.
 * **Framework:** Spring Boot 4.0.5
 * **Motor de Plantillas:** Thymeleaf (Renderizado dinámico del lado del servidor).
 * **Estilos:** Bootstrap 5 + Custom CSS para una experiencia de usuario (UX) médica limpia.
