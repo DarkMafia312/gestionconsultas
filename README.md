@@ -2,7 +2,7 @@
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.5-brightgreen?style=for-the-badge&logo=spring-boot)
-![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3.1-005f0f?style=for-the-badge&logo=thymeleaf)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005f0f?style=for-the-badge&logo=thymeleaf)
 ![Tests](https://img.shields.io/badge/Tests-7%2F7%20Passed-success?style=for-the-badge)
 
 ## 📖 Sobre el Proyecto
